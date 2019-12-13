@@ -17,11 +17,15 @@ export default function SignIn({navigation}) {
     navigation.navigate('Home');
   }
 
+  function navigationSignUp() {
+    navigation.navigate('SignUp');
+  }
+
   return (
     <KeyboardAvoidingView
       style={style.container}
       behavior="padding"
-      enabled={Platform.OS == 'ios'}>
+      enabled={Platform.OS === 'ios'}>
       <Text style={style.logo}>LOGOTIPO</Text>
       <TextInput
         autoCapitalize="none"
@@ -45,7 +49,7 @@ export default function SignIn({navigation}) {
       <View style={style.hr} />
 
       {/* <Text style={style.textCadastro}>Cadastre-se</Text> */}
-      <TouchableOpacity style={style.buttonCadastro}>
+      <TouchableOpacity onPress={navigationSignUp} style={style.buttonCadastro}>
         <Text style={style.buttonText}>Cadastre-se</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
