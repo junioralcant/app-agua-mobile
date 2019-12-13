@@ -7,9 +7,9 @@ import CadAddress from './pages/CadAddress';
 
 export default createAppContainer(
   createSwitchNavigator({
+    Home,
     SignIn,
     CadAddress,
     SignUp,
-    Home,
   }),
 );
