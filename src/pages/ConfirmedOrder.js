@@ -11,7 +11,7 @@ import {
 
 import agua from '../assets/agua.jpg';
 
-export default function FinalizeOrder({navigation}) {
+export default function ConfirmedOrder({navigation}) {
   function navigationHome() {
     navigation.navigate('Home');
   }
@@ -22,10 +22,6 @@ export default function FinalizeOrder({navigation}) {
 
   function navigationListAddress() {
     navigation.navigate('ListAddress');
-  }
-
-  function navigationComfirmedOrder() {
-    navigation.navigate('ConfirmedOrder');
   }
 
   function navigationSignIn() {
@@ -69,52 +65,30 @@ export default function FinalizeOrder({navigation}) {
           </View>
         </View>
 
-        <ScrollView style={style.boxAddress}>
-          <View>
-            <TouchableOpacity style={style.boxSelectAddress}>
-              <Text style={style.textSelectAddress}>Selecione um Endereço</Text>
-              <TouchableOpacity>
-                <Text style={style.addAddress}>+</Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-
-            <Text> </Text>
-
-            <TouchableOpacity
-              onPress={navigationComfirmedOrder}
-              style={style.address}>
-              <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-              <Text style={style.textAddress}>Bairro: Centro</Text>
-              <Text style={style.textAddress}>Cidade: São Mateus</Text>
-              <Text style={style.textAddress}>Nº Casa: 360</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={navigationComfirmedOrder}
-              style={style.address}>
-              <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-              <Text style={style.textAddress}>Bairro: Centro</Text>
-              <Text style={style.textAddress}>Cidade: São Mateus</Text>
-              <Text style={style.textAddress}>Nº Casa: 360</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={navigationComfirmedOrder}
-              style={style.address}>
-              <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-              <Text style={style.textAddress}>Bairro: Centro</Text>
-              <Text style={style.textAddress}>Cidade: São Mateus</Text>
-              <Text style={style.textAddress}>Nº Casa: 360</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={navigationComfirmedOrder}
-              style={style.address}>
-              <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-              <Text style={style.textAddress}>Bairro: Centro</Text>
-              <Text style={style.textAddress}>Cidade: São Mateus</Text>
-              <Text style={style.textAddress}>Nº Casa: 360</Text>
-            </TouchableOpacity>
+        <View style={style.boxAddress}>
+          <View style={style.boxSuccess}>
+            <Text style={style.textSuccessTitle}>
+              Pedido confirmado com sucesso!
+            </Text>
+            <Text style={style.textSuccess}>À nossa equipe já esta</Text>
+            <Text style={style.textSuccess}>trabalhando para fazer</Text>
+            <Text style={style.textSuccess}>a sua entrega</Text>
           </View>
-        </ScrollView>
+
+          <View style={style.boxSelectAddress}>
+            <Text style={style.textSelectAddress}>Selecione um Endereço</Text>
+            <View style={style.hr} />
+          </View>
+
+          <Text> </Text>
+
+          <View style={style.address}>
+            <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
+            <Text style={style.textAddress}>Bairro: Centro</Text>
+            <Text style={style.textAddress}>Cidade: São Mateus</Text>
+            <Text style={style.textAddress}>Nº Casa: 360</Text>
+          </View>
+        </View>
 
         {/* footer */}
         <View style={style.footer}>
@@ -224,9 +198,15 @@ const style = StyleSheet.create({
     textTransform: 'uppercase',
   },
 
+  hr: {
+    alignSelf: 'stretch',
+    borderBottomColor: '#FFF',
+    borderBottomWidth: 0.9,
+    marginTop: 10,
+  },
+
   boxSelectAddress: {
     display: 'flex',
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     // marginBottom: -170,
@@ -237,6 +217,33 @@ const style = StyleSheet.create({
     alignSelf: 'stretch',
     marginTop: 10,
     marginBottom: 10,
+  },
+
+  boxSuccess: {
+    padding: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    marginTop: 5,
+    marginBottom: 25,
+    backgroundColor: '#63f5b0',
+    borderTopLeftRadius: 70,
+
+    borderBottomRightRadius: 80,
+  },
+
+  textSuccessTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    color: '#27272e',
+  },
+
+  textSuccess: {
+    fontSize: 18,
+    fontStyle: 'italic',
+    color: '#27272e',
   },
 
   address: {
