@@ -6,9 +6,11 @@ import SignUp from './pages/SignUp';
 import CadAddress from './pages/CadAddress';
 import FinalizeOrder from './pages/FinalizeOrder';
 import ConfirmedOrder from './pages/ConfirmedOrder';
+import ListAddress from './pages/ListAddress';
 
 export default createAppContainer(
   createSwitchNavigator({
+    ListAddress,
     ConfirmedOrder,
     FinalizeOrder,
     Home,
