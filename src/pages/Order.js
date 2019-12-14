@@ -23,10 +23,6 @@ export default function FinalizeOrder({navigation}) {
     navigation.navigate('ListAddress');
   }
 
-  function navigationComfirmedOrder() {
-    navigation.navigate('ConfirmedOrder');
-  }
-
   function navigationSignIn() {
     navigation.navigate('SignIn');
   }
@@ -47,116 +43,86 @@ export default function FinalizeOrder({navigation}) {
       <View style={style.container}>
         {/* order */}
 
-        <View style={style.boxTextAddress}>
-          <Text style={style.textListAddress}>Endereços cadastrados</Text>
+        <View style={style.boxTextOrder}>
+          <Text style={style.textListOrder}>Pedidos</Text>
         </View>
 
-        <ScrollView style={style.boxOrder}>
+        <ScrollView style={style.boxOrderScroll}>
           <View>
             <Text> </Text>
 
-            <View style={style.boxAddress}>
-              <View style={style.address}>
+            <View style={style.boxOrder}>
+              <View>
                 <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
                 <Text style={style.textAddress}>Bairro: Centro</Text>
                 <Text style={style.textAddress}>Cidade: São Mateus</Text>
                 <Text style={style.textAddress}>Nº Casa: 360</Text>
               </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
+              <View style={style.infoOrder}>
+                <Text style={style.textInfoOrder}> Galão de Água</Text>
+                <Text style={style.textInfoOrder}>4</Text>
+                <Text style={style.textInfoOrder}>28 R$</Text>
+                <Text style={style.textInfoOrder}>14/06/2020</Text>
               </View>
             </View>
 
-            <View style={style.boxAddress}>
-              <View style={style.address}>
+            <View style={style.boxOrder}>
+              <View>
                 <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
                 <Text style={style.textAddress}>Bairro: Centro</Text>
                 <Text style={style.textAddress}>Cidade: São Mateus</Text>
                 <Text style={style.textAddress}>Nº Casa: 360</Text>
               </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
+              <View style={style.infoOrder}>
+                <Text style={style.textInfoOrder}> Galão de Água</Text>
+                <Text style={style.textInfoOrder}>4</Text>
+                <Text style={style.textInfoOrder}>28 R$</Text>
+                <Text style={style.textInfoOrder}>14/06/2020</Text>
               </View>
             </View>
 
-            <View style={style.boxAddress}>
-              <View style={style.address}>
+            <View style={style.boxOrder}>
+              <View>
                 <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
                 <Text style={style.textAddress}>Bairro: Centro</Text>
                 <Text style={style.textAddress}>Cidade: São Mateus</Text>
                 <Text style={style.textAddress}>Nº Casa: 360</Text>
               </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
+              <View style={style.infoOrder}>
+                <Text style={style.textInfoOrder}> Galão de Água</Text>
+                <Text style={style.textInfoOrder}>4</Text>
+                <Text style={style.textInfoOrder}>28 R$</Text>
+                <Text style={style.textInfoOrder}>14/06/2020</Text>
               </View>
             </View>
 
-            <View style={style.boxAddress}>
-              <View style={style.address}>
+            <View style={style.boxOrder}>
+              <View>
                 <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
                 <Text style={style.textAddress}>Bairro: Centro</Text>
                 <Text style={style.textAddress}>Cidade: São Mateus</Text>
                 <Text style={style.textAddress}>Nº Casa: 360</Text>
               </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
+              <View style={style.infoOrder}>
+                <Text style={style.textInfoOrder}> Galão de Água</Text>
+                <Text style={style.textInfoOrder}>4</Text>
+                <Text style={style.textInfoOrder}>28 R$</Text>
+                <Text style={style.textInfoOrder}>14/06/2020</Text>
               </View>
             </View>
 
-            <View style={style.boxAddress}>
-              <View style={style.address}>
+            <View style={style.boxOrder}>
+              <View>
                 <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
                 <Text style={style.textAddress}>Bairro: Centro</Text>
                 <Text style={style.textAddress}>Cidade: São Mateus</Text>
                 <Text style={style.textAddress}>Nº Casa: 360</Text>
               </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
+              <View style={style.infoOrder}>
+                <Text style={style.textInfoOrder}> Galão de Água</Text>
+                <Text style={style.textInfoOrder}>4</Text>
+                <Text style={style.textInfoOrder}>28 R$</Text>
+                <Text style={style.textInfoOrder}>14/06/2020</Text>
               </View>
             </View>
           </View>
@@ -206,7 +172,7 @@ const style = StyleSheet.create({
     padding: 30,
   },
 
-  boxTextAddress: {
+  boxTextOrder: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -214,14 +180,14 @@ const style = StyleSheet.create({
     // marginBottom: -170,
   },
 
-  boxOrder: {
+  boxOrderScroll: {
     display: 'flex',
     alignSelf: 'stretch',
     marginTop: 10,
     marginBottom: 10,
   },
 
-  boxAddress: {
+  boxOrder: {
     padding: 10,
     display: 'flex',
     flexDirection: 'row',
@@ -232,15 +198,19 @@ const style = StyleSheet.create({
     backgroundColor: '#FFF',
   },
 
-  textListAddress: {
+  textListOrder: {
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold',
   },
 
-  ectionAddress: {
+  infoOrder: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    backgroundColor: '#7289da',
+    padding: 5,
+    borderRadius: 4,
   },
 
   footer: {
@@ -265,6 +235,11 @@ const style = StyleSheet.create({
     color: '#27272e',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  textInfoOrder: {
+    color: '#FFF',
+    fontSize: 17,
+    fontWeight: '900',
   },
   text: {
     color: '#FFF',

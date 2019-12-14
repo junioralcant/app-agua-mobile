@@ -7,14 +7,16 @@ import CadAddress from './pages/CadAddress';
 import FinalizeOrder from './pages/FinalizeOrder';
 import ConfirmedOrder from './pages/ConfirmedOrder';
 import ListAddress from './pages/ListAddress';
+import Order from './pages/Order';
 
 export default createAppContainer(
   createSwitchNavigator({
+    SignIn,
+    Order,
     ListAddress,
     ConfirmedOrder,
     FinalizeOrder,
     Home,
-    SignIn,
     CadAddress,
     SignUp,
   }),
