@@ -20,10 +20,6 @@ export default function Home({navigation}) {
     navigation.navigate('FinalizeOrder');
   }
 
-  function navigationFinalizeOrder() {
-    navigation.navigate('FinalizeOrder');
-  }
-
   function navigationOrder() {
     navigation.navigate('Order');
   }
