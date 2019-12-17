@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,11 +8,22 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   ScrollView,
 } from 'react-native';
 
+import api from '../services/api';
+
 export default function FinalizeOrder({navigation}) {
+  const [address, setAddress] = useState([]);
+
+  useEffect(() => {
+    async function loadAddress() {
+      const response = await api.get('/enderecos');
+      setAddress(response.data);
+    }
+
+    loadAddress();
+  }, []);
   function navigationHome() {
     navigation.navigate('Home');
   }
@@ -32,6 +43,7 @@ export default function FinalizeOrder({navigation}) {
   function navigationSignIn() {
     navigation.navigate('SignIn');
   }
+  console.log(address);
   return (
     <>
       {/* header */}
@@ -57,110 +69,36 @@ export default function FinalizeOrder({navigation}) {
           <View>
             <Text> </Text>
 
-            <View style={style.boxAddress}>
-              <View style={style.address}>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View style={style.boxAddress}>
-              <View style={style.address}>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View style={style.boxAddress}>
-              <View style={style.address}>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View style={style.boxAddress}>
-              <View style={style.address}>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View style={style.boxAddress}>
-              <View style={style.address}>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.ectionAddress}>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="edit" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>
-                    <Icon name="trash" size={25} color="#7289da" />
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            {address.map(addres => {
+              return (
+                <View key={addres._id} style={style.boxAddress}>
+                  <View style={style.address}>
+                    <Text style={style.textAddress}>Rua: {addres.rua}</Text>
+                    <Text style={style.textAddress}>
+                      Bairro: {addres.bairro}
+                    </Text>
+                    <Text style={style.textAddress}>
+                      Cidade: {addres.cidade}
+                    </Text>
+                    <Text style={style.textAddress}>
+                      Nº Casa: {addres.numeroCasa}
+                    </Text>
+                  </View>
+                  <View style={style.ectionAddress}>
+                    <TouchableOpacity>
+                      <Text>
+                        <Icon name="edit" size={25} color="#7289da" />
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Text>
+                        <Icon name="trash" size={25} color="#7289da" />
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
           </View>
         </ScrollView>
 
