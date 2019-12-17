@@ -17,6 +17,18 @@ export default function ConfirmedOrder({navigation}) {
   const price = navigation.getParam('price');
 
   useEffect(() => {
+    async function handlerOrder() {
+      await api.post('/pedidos', {
+        produto: productId,
+        enderecoId: addressId,
+        quantidade: amount,
+      });
+    }
+
+    handlerOrder();
+  }, [productId, addressId, amount]);
+
+  useEffect(() => {
     async function loadProduct() {
       const response = await api.get(`/produtos/${productId}`);
       setProduct(response.data);

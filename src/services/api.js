@@ -17,4 +17,12 @@ api.interceptors.request.use(async config => {
   }
 });
 
+// metodo auternativo para dar put ou post
+api.postOrPut = (url, id, data, config = {}) => {
+  const method = id ? 'put' : 'post';
+  const apiUrl = id ? `${url}/${id}` : url;
+
+  return api[method](apiUrl, data, config);
+};
+
 export default api;
