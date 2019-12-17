@@ -71,7 +71,7 @@ export default function FinalizeOrder({navigation}) {
             {orders.map(order => {
               const date = parseISO(order.createdAt);
 
-              const dateOrder = format(date, 'dd-MM-yyyy H:mm', {
+              const dateOrder = format(date, 'dd-MM-yyyy', {
                 locale: pt,
               });
               return (
