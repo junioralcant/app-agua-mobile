@@ -1,5 +1,6 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   View,
@@ -133,15 +134,23 @@ export default function FinalizeOrder({navigation}) {
           <TouchableOpacity
             onPress={navigationOrder}
             style={style.buttonFooter}>
-            <Text style={style.text}>Pedidos</Text>
+            <MaterialCommunityIcons
+              name="truck-delivery"
+              size={25}
+              color="#979798"
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={navigationHome} style={style.buttonFooter}>
-            <Text style={style.text}>Home</Text>
+            <Text>
+              <Entypo name="home" size={25} color="#979798" />
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={navigationListAddress}
             style={style.buttonFooter}>
-            <Text style={style.text}>Endereço</Text>
+            <Text>
+              <Entypo name="address" size={25} color="#979798" />
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -182,7 +191,6 @@ const style = StyleSheet.create({
 
   boxOrderScroll: {
     display: 'flex',
-    alignSelf: 'stretch',
     marginTop: 10,
     marginBottom: 10,
   },
@@ -211,6 +219,7 @@ const style = StyleSheet.create({
     backgroundColor: '#7289da',
     padding: 5,
     borderRadius: 4,
+    marginLeft: 10,
   },
 
   footer: {

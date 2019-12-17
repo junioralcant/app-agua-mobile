@@ -102,7 +102,7 @@ const style = StyleSheet.create({
   hr: {
     alignSelf: 'stretch',
     borderBottomColor: '#FFF',
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.6,
     marginTop: 25,
   },
 

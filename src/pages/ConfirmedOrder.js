@@ -1,13 +1,8 @@
 import React from 'react';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import agua from '../assets/agua.jpg';
 
@@ -36,7 +31,7 @@ export default function ConfirmedOrder({navigation}) {
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <Text style={style.textHeadder}>Junior</Text>
+          <Text style={style.textHeadder}>Junior Marques</Text>
         </TouchableOpacity>
       </View>
       {/* containder */}
@@ -68,15 +63,12 @@ export default function ConfirmedOrder({navigation}) {
         <View style={style.boxAddress}>
           <View style={style.boxSuccess}>
             <Text style={style.textSuccessTitle}>
-              Pedido confirmado com sucesso!
+              Pedido efetuado com sucesso!
             </Text>
-            <Text style={style.textSuccess}>À nossa equipe já esta</Text>
-            <Text style={style.textSuccess}>trabalhando para fazer</Text>
-            <Text style={style.textSuccess}>a sua entrega</Text>
           </View>
 
           <View style={style.boxSelectAddress}>
-            <Text style={style.textSelectAddress}>Selecione um Endereço</Text>
+            <Text style={style.textSelectAddress}>Endereço selecionado</Text>
             <View style={style.hr} />
           </View>
 
@@ -95,15 +87,23 @@ export default function ConfirmedOrder({navigation}) {
           <TouchableOpacity
             onPress={navigationOrder}
             style={style.buttonFooter}>
-            <Text style={style.text}>Pedidos</Text>
+            <MaterialCommunityIcons
+              name="truck-delivery"
+              size={25}
+              color="#979798"
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={navigationHome} style={style.buttonFooter}>
-            <Text style={style.text}>Home</Text>
+            <Text>
+              <Entypo name="home" size={25} color="#979798" />
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={navigationListAddress}
             style={style.buttonFooter}>
-            <Text style={style.text}>Endereço</Text>
+            <Text>
+              <Entypo name="address" size={25} color="#979798" />
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -122,10 +122,12 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#27272e',
   },
+
   textHeadder: {
     color: '#FFF',
     fontSize: 15,
   },
+
   container: {
     flex: 1,
     backgroundColor: '#353940',
@@ -140,7 +142,6 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    alignSelf: 'stretch',
     height: 150,
     backgroundColor: '#27272e',
     borderRadius: 20,
@@ -228,7 +229,6 @@ const style = StyleSheet.create({
     marginTop: 5,
     marginBottom: 25,
     backgroundColor: '#63f5b0',
-    borderTopLeftRadius: 70,
 
     borderBottomRightRadius: 80,
   },

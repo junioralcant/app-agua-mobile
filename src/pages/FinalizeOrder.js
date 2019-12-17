@@ -1,4 +1,6 @@
 import React from 'react';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   View,
@@ -40,7 +42,7 @@ export default function FinalizeOrder({navigation}) {
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <Text style={style.textHeadder}>Junior</Text>
+          <Text style={style.textHeadder}>Junior Marques</Text>
         </TouchableOpacity>
       </View>
       {/* containder */}
@@ -121,15 +123,23 @@ export default function FinalizeOrder({navigation}) {
           <TouchableOpacity
             onPress={navigationOrder}
             style={style.buttonFooter}>
-            <Text style={style.text}>Pedidos</Text>
+            <MaterialCommunityIcons
+              name="truck-delivery"
+              size={25}
+              color="#979798"
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={navigationHome} style={style.buttonFooter}>
-            <Text style={style.text}>Home</Text>
+            <Text>
+              <Entypo name="home" size={25} color="#979798" />
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={navigationListAddress}
             style={style.buttonFooter}>
-            <Text style={style.text}>Endereço</Text>
+            <Text>
+              <Entypo name="address" size={25} color="#979798" />
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -166,7 +176,6 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    alignSelf: 'stretch',
     height: 150,
     backgroundColor: '#27272e',
     borderRadius: 20,

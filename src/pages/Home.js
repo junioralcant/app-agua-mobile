@@ -1,13 +1,8 @@
 import React from 'react';
+import Icon from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import agua from '../assets/agua.jpg';
 
@@ -65,15 +60,23 @@ export default function Home({navigation}) {
           <TouchableOpacity
             onPress={navigationOrder}
             style={style.buttonFooter}>
-            <Text style={style.text}>Pedidos</Text>
+            <MaterialCommunityIcons
+              name="truck-delivery"
+              size={25}
+              color="#979798"
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={navigationHome} style={style.buttonFooter}>
-            <Text style={style.text}>Home</Text>
+            <Text>
+              <Icon name="home" size={25} color="#979798" />
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={navigationListAddress}
             style={style.buttonFooter}>
-            <Text style={style.text}>Endereço</Text>
+            <Text>
+              <Icon name="address" size={25} color="#979798" />
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -110,7 +113,6 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    alignSelf: 'stretch',
     height: 150,
     backgroundColor: '#27272e',
     borderRadius: 20,
