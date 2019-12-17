@@ -1,17 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {format, parseISO} from 'date-fns';
+import {pt} from 'date-fns/locale/pt';
 
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   ScrollView,
 } from 'react-native';
 
+import api from '../services/api';
+
 export default function FinalizeOrder({navigation}) {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    async function loadOrder() {
+      const response = await api.get('/pedidos');
+      setOrders(response.data);
+    }
+
+    loadOrder();
+  }, []);
   function navigationHome() {
     navigation.navigate('Home');
   }
@@ -27,6 +40,9 @@ export default function FinalizeOrder({navigation}) {
   function navigationSignIn() {
     navigation.navigate('SignIn');
   }
+
+  console.log(orders);
+
   return (
     <>
       {/* header */}
@@ -52,80 +68,46 @@ export default function FinalizeOrder({navigation}) {
           <View>
             <Text> </Text>
 
-            <View style={style.boxOrder}>
-              <View>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.infoOrder}>
-                <Text style={style.textInfoOrder}> Galão de Água</Text>
-                <Text style={style.textInfoOrder}>4</Text>
-                <Text style={style.textInfoOrder}>28 R$</Text>
-                <Text style={style.textInfoOrder}>14/06/2020</Text>
-              </View>
-            </View>
+            {orders.map(order => {
+              const date = parseISO(order.createdAt);
 
-            <View style={style.boxOrder}>
-              <View>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.infoOrder}>
-                <Text style={style.textInfoOrder}> Galão de Água</Text>
-                <Text style={style.textInfoOrder}>4</Text>
-                <Text style={style.textInfoOrder}>28 R$</Text>
-                <Text style={style.textInfoOrder}>14/06/2020</Text>
-              </View>
-            </View>
+              const dateOrder = format(date, 'dd-MM-yyyy H:mm', {
+                locale: pt,
+              });
+              return (
+                <View key={order._id} style={style.boxOrder}>
+                  {order.enderecoEntrega.map(end => {
+                    return (
+                      <View key={end._id}>
+                        <Text style={style.textAddress}>Rua: {end.rua}</Text>
+                        <Text style={style.textAddress}>
+                          Bairro: {end.bairro}
+                        </Text>
+                        <Text style={style.textAddress}>
+                          Cidade: {end.cidade}
+                        </Text>
+                        <Text style={style.textAddress}>
+                          Nº Casa: {end.numeroCasa}
+                        </Text>
+                      </View>
+                    );
+                  })}
 
-            <View style={style.boxOrder}>
-              <View>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.infoOrder}>
-                <Text style={style.textInfoOrder}> Galão de Água</Text>
-                <Text style={style.textInfoOrder}>4</Text>
-                <Text style={style.textInfoOrder}>28 R$</Text>
-                <Text style={style.textInfoOrder}>14/06/2020</Text>
-              </View>
-            </View>
+                  {console.log()}
 
-            <View style={style.boxOrder}>
-              <View>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.infoOrder}>
-                <Text style={style.textInfoOrder}> Galão de Água</Text>
-                <Text style={style.textInfoOrder}>4</Text>
-                <Text style={style.textInfoOrder}>28 R$</Text>
-                <Text style={style.textInfoOrder}>14/06/2020</Text>
-              </View>
-            </View>
-
-            <View style={style.boxOrder}>
-              <View>
-                <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-                <Text style={style.textAddress}>Bairro: Centro</Text>
-                <Text style={style.textAddress}>Cidade: São Mateus</Text>
-                <Text style={style.textAddress}>Nº Casa: 360</Text>
-              </View>
-              <View style={style.infoOrder}>
-                <Text style={style.textInfoOrder}> Galão de Água</Text>
-                <Text style={style.textInfoOrder}>4</Text>
-                <Text style={style.textInfoOrder}>28 R$</Text>
-                <Text style={style.textInfoOrder}>14/06/2020</Text>
-              </View>
-            </View>
+                  <View style={style.infoOrder}>
+                    <Text style={style.textInfoOrder}>
+                      {order.produto.nome}
+                    </Text>
+                    <Text style={style.textInfoOrder}>{order.quantidade}</Text>
+                    <Text style={style.textInfoOrder}>
+                      {order.valorTotal} R$
+                    </Text>
+                    <Text style={style.textInfoOrder}>{dateOrder}</Text>
+                  </View>
+                </View>
+              );
+            })}
           </View>
         </ScrollView>
 
