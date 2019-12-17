@@ -47,8 +47,8 @@ export default function FinalizeOrder({navigation}) {
     <>
       {/* header */}
       <View style={style.header}>
-        <TouchableOpacity onPress={navigationSignIn}>
-          <Text style={style.textHeadder}>Sair</Text>
+        <TouchableOpacity>
+          <Text style={style.textHeadder} />
         </TouchableOpacity>
 
         <TouchableOpacity>
@@ -74,6 +74,7 @@ export default function FinalizeOrder({navigation}) {
               const dateOrder = format(date, 'dd-MM-yyyy', {
                 locale: pt,
               });
+              console.log('teste' + order);
               return (
                 <View key={order._id} style={style.boxOrder}>
                   {order.enderecoEntrega.map(end => {
@@ -92,8 +93,6 @@ export default function FinalizeOrder({navigation}) {
                       </View>
                     );
                   })}
-
-                  {console.log()}
 
                   <View style={style.infoOrder}>
                     <Text style={style.textInfoOrder}>

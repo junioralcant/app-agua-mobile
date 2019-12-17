@@ -18,14 +18,15 @@ export default function Home({navigation}) {
     }
     loadProduct();
   }, []);
-  console.log(product);
 
   function navigationHome() {
     navigation.navigate('Home');
   }
 
-  function navigationFinalizeOrder() {
-    navigation.navigate('FinalizeOrder');
+  function navigationFinalizeOrder(productId) {
+    AsyncStorage.setItem('productId', productId);
+
+    navigation.navigate('FinalizeOrder', {id: productId});
   }
 
   function navigationOrder() {
@@ -61,7 +62,7 @@ export default function Home({navigation}) {
           return (
             <TouchableOpacity
               key={product._id}
-              onPress={navigationFinalizeOrder}
+              onPress={() => navigationFinalizeOrder(product._id)}
               style={style.product}>
               <View style={style.image}>
                 <Image style={style.avatar} source={agua} />

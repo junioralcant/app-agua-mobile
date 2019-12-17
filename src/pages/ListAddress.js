@@ -48,8 +48,8 @@ export default function FinalizeOrder({navigation}) {
     <>
       {/* header */}
       <View style={style.header}>
-        <TouchableOpacity onPress={navigationSignIn}>
-          <Text style={style.textHeadder}>Sair</Text>
+        <TouchableOpacity>
+          <Text style={style.textHeadder} />
         </TouchableOpacity>
 
         <TouchableOpacity>

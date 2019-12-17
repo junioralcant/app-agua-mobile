@@ -52,7 +52,6 @@ export default function SignIn({navigation}) {
         });
 
         navigation.dispatch(resetAction);
-        console.log('teste');
       } catch (_err) {
         setError('Houve um problema com o login, verifique suas credenciais!');
       }

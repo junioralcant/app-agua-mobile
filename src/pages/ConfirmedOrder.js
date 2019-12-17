@@ -1,12 +1,38 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
+import api from '../services/api';
 import agua from '../assets/agua.jpg';
 
 export default function ConfirmedOrder({navigation}) {
+  const [product, setProduct] = useState([]);
+  const [address, setAddress] = useState([]);
+
+  const addressId = navigation.getParam('idAddress');
+  const productId = navigation.getParam('idProduct');
+  const amount = navigation.getParam('amount');
+  const price = navigation.getParam('price');
+
+  useEffect(() => {
+    async function loadProduct() {
+      const response = await api.get(`/produtos/${productId}`);
+      setProduct(response.data);
+    }
+    loadProduct();
+  }, [productId]);
+
+  useEffect(() => {
+    async function loadAddress() {
+      const response = await api.get(`/enderecos/ ${addressId}`);
+      setAddress(response.data);
+    }
+
+    loadAddress();
+  }, [addressId]);
+
   function navigationHome() {
     navigation.navigate('Home');
   }
@@ -19,15 +45,12 @@ export default function ConfirmedOrder({navigation}) {
     navigation.navigate('ListAddress');
   }
 
-  function navigationSignIn() {
-    navigation.navigate('SignIn');
-  }
   return (
     <>
       {/* header */}
       <View style={style.header}>
-        <TouchableOpacity onPress={navigationSignIn}>
-          <Text style={style.textHeadder}>Sair</Text>
+        <TouchableOpacity>
+          <Text style={style.textHeadder} />
         </TouchableOpacity>
 
         <TouchableOpacity>
@@ -44,18 +67,12 @@ export default function ConfirmedOrder({navigation}) {
           </View>
 
           <View style={style.productInfo}>
-            <Text style={style.textProduct}>Água Lençoís Maranhese </Text>
+            <Text style={style.textProduct}>{product.nome} </Text>
             <View style={style.buttonsProduct}>
-              <TouchableOpacity>
-                <Text style={style.textButtonsProduct}> - </Text>
-              </TouchableOpacity>
-              <Text style={style.textButtonsProduct}>0</Text>
-              <TouchableOpacity>
-                <Text style={style.textButtonsProduct}> + </Text>
-              </TouchableOpacity>
+              <Text style={style.textButtonsProduct}>{amount}</Text>
             </View>
             <View style={style.price}>
-              <Text style={style.text}>7.00 R$</Text>
+              <Text style={style.text}>{price} R$</Text>
             </View>
           </View>
         </View>
@@ -75,10 +92,10 @@ export default function ConfirmedOrder({navigation}) {
           <Text> </Text>
 
           <View style={style.address}>
-            <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-            <Text style={style.textAddress}>Bairro: Centro</Text>
-            <Text style={style.textAddress}>Cidade: São Mateus</Text>
-            <Text style={style.textAddress}>Nº Casa: 360</Text>
+            <Text style={style.textAddress}>Rua: {address.rua}</Text>
+            <Text style={style.textAddress}>Bairro: {address.bairro}</Text>
+            <Text style={style.textAddress}>Cidade: {address.cidade}</Text>
+            <Text style={style.textAddress}>Nº Casa: {address.numeroCasa}</Text>
           </View>
         </View>
 
@@ -165,7 +182,9 @@ const style = StyleSheet.create({
 
   buttonsProduct: {
     display: 'flex',
-    flexDirection: 'row',
+    width: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#FFF',
     borderRadius: 4,
   },

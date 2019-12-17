@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -11,9 +11,34 @@ import {
   ScrollView,
 } from 'react-native';
 
+import api from '../services/api';
 import agua from '../assets/agua.jpg';
 
 export default function FinalizeOrder({navigation}) {
+  const [product, setProduct] = useState([]);
+  const [address, setAddress] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const [price, setPrice] = useState(0);
+
+  const id = navigation.getParam('id');
+
+  useEffect(() => {
+    async function loadProduct() {
+      const response = await api.get(`/produtos/${id}`);
+      setProduct(response.data);
+    }
+    loadProduct();
+  }, [id]);
+
+  useEffect(() => {
+    async function loadAddress() {
+      const response = await api.get('/enderecos');
+      setAddress(response.data);
+    }
+
+    loadAddress();
+  }, []);
+
   function navigationHome() {
     navigation.navigate('Home');
   }
@@ -26,19 +51,31 @@ export default function FinalizeOrder({navigation}) {
     navigation.navigate('ListAddress');
   }
 
-  function navigationComfirmedOrder() {
-    navigation.navigate('ConfirmedOrder');
+  function navigationComfirmedOrder(addressId) {
+    navigation.navigate('ConfirmedOrder', {
+      idAddress: addressId,
+      idProduct: id,
+      amount,
+      price,
+    });
   }
 
-  function navigationSignIn() {
-    navigation.navigate('SignIn');
+  function addAmount() {
+    setAmount(amount + 1);
+    setPrice((amount + 1) * product.preco);
   }
+
+  function subAmount() {
+    setAmount(amount - 1);
+    setPrice((amount - 1) * product.preco);
+  }
+
   return (
     <>
       {/* header */}
       <View style={style.header}>
-        <TouchableOpacity onPress={navigationSignIn}>
-          <Text style={style.textHeadder}>Sair</Text>
+        <TouchableOpacity>
+          <Text style={style.textHeadder} />
         </TouchableOpacity>
 
         <TouchableOpacity>
@@ -55,18 +92,18 @@ export default function FinalizeOrder({navigation}) {
           </View>
 
           <View style={style.productInfo}>
-            <Text style={style.textProduct}>Água Lençoís Maranhese </Text>
+            <Text style={style.textProduct}>{product.nome} </Text>
             <View style={style.buttonsProduct}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={subAmount}>
                 <Text style={style.textButtonsProduct}> - </Text>
               </TouchableOpacity>
-              <Text style={style.textButtonsProduct}>0</Text>
-              <TouchableOpacity>
+              <Text style={style.textButtonsProduct}>{amount}</Text>
+              <TouchableOpacity onPress={addAmount}>
                 <Text style={style.textButtonsProduct}> + </Text>
               </TouchableOpacity>
             </View>
             <View style={style.price}>
-              <Text style={style.text}>7.00 R$</Text>
+              <Text style={style.text}>{price} R$</Text>
             </View>
           </View>
         </View>
@@ -82,39 +119,21 @@ export default function FinalizeOrder({navigation}) {
 
             <Text> </Text>
 
-            <TouchableOpacity
-              onPress={navigationComfirmedOrder}
-              style={style.address}>
-              <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-              <Text style={style.textAddress}>Bairro: Centro</Text>
-              <Text style={style.textAddress}>Cidade: São Mateus</Text>
-              <Text style={style.textAddress}>Nº Casa: 360</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={navigationComfirmedOrder}
-              style={style.address}>
-              <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-              <Text style={style.textAddress}>Bairro: Centro</Text>
-              <Text style={style.textAddress}>Cidade: São Mateus</Text>
-              <Text style={style.textAddress}>Nº Casa: 360</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={navigationComfirmedOrder}
-              style={style.address}>
-              <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-              <Text style={style.textAddress}>Bairro: Centro</Text>
-              <Text style={style.textAddress}>Cidade: São Mateus</Text>
-              <Text style={style.textAddress}>Nº Casa: 360</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={navigationComfirmedOrder}
-              style={style.address}>
-              <Text style={style.textAddress}>Rua: Toca da Raposa</Text>
-              <Text style={style.textAddress}>Bairro: Centro</Text>
-              <Text style={style.textAddress}>Cidade: São Mateus</Text>
-              <Text style={style.textAddress}>Nº Casa: 360</Text>
-            </TouchableOpacity>
+            {address.map(addres => {
+              return (
+                <TouchableOpacity
+                  key={addres._id}
+                  onPress={() => navigationComfirmedOrder(addres._id)}
+                  style={style.address}>
+                  <Text style={style.textAddress}>Rua: {addres.rua}</Text>
+                  <Text style={style.textAddress}>Bairro: {addres.bairro}</Text>
+                  <Text style={style.textAddress}>Cidade: {addres.cidade}</Text>
+                  <Text style={style.textAddress}>
+                    Nº Casa: {addres.numeroCasa}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </ScrollView>
 
