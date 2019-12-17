@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {StackActions, NavigationActions} from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {
   View,
@@ -10,15 +12,51 @@ import {
   Platform,
 } from 'react-native';
 
-export default function SignIn({navigation}) {
-  const [user, setUser] = useState('');
+import api from '../services/api';
 
-  function handleSignIn() {
-    navigation.navigate('Home');
-  }
+export default function SignIn({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   function navigationSignUp() {
     navigation.navigate('SignUp');
+  }
+
+  function navigationHome() {
+    navigation.navigate('Home');
+  }
+
+  function handleEmailChange(email) {
+    setEmail(email);
+  }
+
+  function handlePasswordChange(password) {
+    setPassword(password);
+  }
+
+  async function handleSignInPress() {
+    if (email.length === 0 || password.length === 0) {
+      setError('Preencha usuário e senha para continuar!');
+    } else {
+      try {
+        const response = await api.post('/sessions', {
+          email,
+          password,
+        });
+
+        await AsyncStorage.setItem('@AppAgua:token', response.data.token);
+
+        const resetAction = NavigationActions.navigate({
+          routeName: 'Home',
+        });
+
+        navigation.dispatch(resetAction);
+        console.log('teste');
+      } catch (_err) {
+        setError('Houve um problema com o login, verifique suas credenciais!');
+      }
+    }
   }
 
   return (
@@ -27,11 +65,14 @@ export default function SignIn({navigation}) {
       behavior="padding"
       enabled={Platform.OS === 'ios'}>
       <Text style={style.logo}>LOGOTIPO</Text>
+      {error !== 0 && <Text style={style.error}>{error}</Text>}
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
         style={style.input}
         placeholder="Informe seu e-mail"
+        onChangeText={handleEmailChange}
+        value={email}
         placeholderTextColor="#999"
       />
 
@@ -39,16 +80,19 @@ export default function SignIn({navigation}) {
         style={style.input}
         placeholder="Informe sua senha"
         placeholderTextColor="#999"
+        onChangeText={handlePasswordChange}
         secureTextEntry={true}
+        value={password}
       />
 
-      <TouchableOpacity onPress={handleSignIn} style={style.button}>
+      <TouchableOpacity
+        onPress={() => handleSignInPress()}
+        style={style.button}>
         <Text style={style.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
       <View style={style.hr} />
 
-      {/* <Text style={style.textCadastro}>Cadastre-se</Text> */}
       <TouchableOpacity onPress={navigationSignUp} style={style.buttonCadastro}>
         <Text style={style.buttonText}>Cadastre-se</Text>
       </TouchableOpacity>
@@ -69,6 +113,13 @@ const style = StyleSheet.create({
   logo: {
     color: '#FFF',
     fontSize: 30,
+  },
+
+  error: {
+    textAlign: 'center',
+    color: '#ce2029',
+    fontSize: 18,
+    marginHorizontal: 20,
   },
 
   input: {

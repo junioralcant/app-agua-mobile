@@ -1,12 +1,25 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import agua from '../assets/agua.jpg';
+import api from '../services/api';
 
 export default function Home({navigation}) {
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    async function loadProduct() {
+      const response = await api.get('/produtos');
+      setProduct(response.data.docs);
+    }
+    loadProduct();
+  }, []);
+  console.log(product);
+
   function navigationHome() {
     navigation.navigate('Home');
   }
@@ -23,14 +36,16 @@ export default function Home({navigation}) {
     navigation.navigate('ListAddress');
   }
 
-  function navigationSignIn() {
+  function logout() {
+    AsyncStorage.removeItem('@AppAgua:token');
     navigation.navigate('SignIn');
   }
+
   return (
     <>
       {/* header */}
       <View style={style.header}>
-        <TouchableOpacity onPress={navigationSignIn}>
+        <TouchableOpacity onPress={logout}>
           <Text style={style.textHeadder}>Sair</Text>
         </TouchableOpacity>
 
@@ -42,18 +57,23 @@ export default function Home({navigation}) {
 
       <View style={style.container}>
         {/* product */}
-        <TouchableOpacity
-          onPress={navigationFinalizeOrder}
-          style={style.product}>
-          <View style={style.image}>
-            <Image style={style.avatar} source={agua} />
-          </View>
+        {product.map(product => {
+          return (
+            <TouchableOpacity
+              key={product._id}
+              onPress={navigationFinalizeOrder}
+              style={style.product}>
+              <View style={style.image}>
+                <Image style={style.avatar} source={agua} />
+              </View>
 
-          <View style={style.productInfo}>
-            <Text style={style.textProduct}>Água Lençoís Maranhese </Text>
-            <Text style={style.text}>7.00 R$</Text>
-          </View>
-        </TouchableOpacity>
+              <View style={style.productInfo}>
+                <Text style={style.textProduct}>{product.nome}</Text>
+                <Text style={style.text}>{product.preco},00 R$</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
 
         {/* footer */}
         <View style={style.footer}>
