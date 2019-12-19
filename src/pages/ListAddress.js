@@ -36,14 +36,10 @@ export default function FinalizeOrder({navigation}) {
     navigation.navigate('ListAddress');
   }
 
-  function navigationComfirmedOrder() {
-    navigation.navigate('ConfirmedOrder');
+  function navigationCadAddress() {
+    navigation.navigate('CadAddress', {from: 'ListAddress'});
   }
 
-  function navigationSignIn() {
-    navigation.navigate('SignIn');
-  }
-  console.log(address);
   return (
     <>
       {/* header */}
@@ -62,7 +58,10 @@ export default function FinalizeOrder({navigation}) {
         {/* order */}
 
         <View style={style.boxTextAddress}>
-          <Text style={style.textListAddress}>Endereços cadastrados</Text>
+          <Text style={style.textListAddress}>Endereços</Text>
+          <TouchableOpacity onPress={navigationCadAddress}>
+            <Text style={style.addAddress}> + </Text>
+          </TouchableOpacity>
         </View>
 
         <ScrollView style={style.boxOrder}>
@@ -184,6 +183,15 @@ const style = StyleSheet.create({
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+
+  addAddress: {
+    marginLeft: 20,
+    paddingHorizontal: 10,
+    color: '#FFF',
+    fontSize: 30,
+    backgroundColor: '#7289da',
+    borderRadius: 4,
   },
 
   ectionAddress: {

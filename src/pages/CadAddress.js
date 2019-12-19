@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 
 // import { Container } from './styles';
@@ -18,41 +19,47 @@ export default function CadAddress({navigation}) {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [numberHouse, setNumberHouse] = useState('');
+  const [error, setError] = useState('');
 
-  const name = navigation.getParam('name');
-  const cellPhone = navigation.getParam('cellPhone');
-  const email = navigation.getParam('email');
-  const password = navigation.getParam('password');
+  const from = navigation.getParam('from');
 
   async function handlerSubmit() {
-    await api.post('/users', {
-      nome: name,
-      telefone: cellPhone,
-      password,
-      email,
-      endereco: [
-        {
+    if (!street || !neighborhood || !city || !state || !numberHouse) {
+      setError('Preencha todos os campos');
+    } else {
+      await api.post('/enderecos', {
+        endereco: {
           rua: street,
           bairro: neighborhood,
           cidade: city,
           estado: state,
           numeroCasa: numberHouse,
         },
-      ],
-    });
+      });
+
+      if (from === 'FinalizeOrder') {
+        navigation.navigate('FinalizeOrder');
+      } else if (from === 'ListAddress') {
+        navigation.navigate('ListAddress');
+      }
+    }
   }
 
-  console.log(street);
-
-  function navigationSignUp() {
-    navigation.navigate('SignUp');
+  function navigationFrom() {
+    if (from === 'FinalizeOrder') {
+      navigation.navigate('FinalizeOrder');
+    } else if (from === 'ListAddress') {
+      navigation.navigate('ListAddress');
+    }
   }
+
   return (
     <KeyboardAvoidingView
       style={style.container}
       behavior="padding"
       enabled={Platform.OS === 'ios'}>
-      <Text style={style.title}>Informe seu endereço</Text>
+      <Text style={style.title}>Cadastro de endereço</Text>
+      {error !== 0 && <Text style={style.error}>{error}</Text>}
       <TextInput
         style={style.input}
         placeholder="Rua"
@@ -95,12 +102,12 @@ export default function CadAddress({navigation}) {
       />
 
       <View style={style.footer}>
-        <TouchableOpacity onPress={navigationSignUp} style={style.button}>
+        <TouchableOpacity onPress={navigationFrom} style={style.button}>
           <Text style={style.buttonText}>Voltar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handlerSubmit} style={style.button}>
-          <Text style={style.buttonText}>Próximo</Text>
+          <Text style={style.buttonText}>Salvar</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -141,6 +148,13 @@ const style = StyleSheet.create({
     marginTop: 55,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  error: {
+    textAlign: 'center',
+    color: '#ce2029',
+    fontSize: 18,
+    marginHorizontal: 20,
   },
 
   buttonText: {
