@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {
   View,
@@ -8,16 +8,32 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
+import api from '../services/api';
+
 export default function SignUp({navigation}) {
+  const [name, setName] = useState();
+  const [cellPhone, setCellPhone] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   function navigationSignIn() {
     navigation.navigate('SignIn');
   }
 
-  function navigationSignUp() {
-    navigation.navigate('CadAddress');
+  async function handlerSubmit() {
+    await api.post('/users', {
+      nome: name,
+      telefone: cellPhone,
+      email,
+      password,
+    });
+    Alert.alert('Cadastro', 'Cadastro efetuado com sucesso!');
+    navigation.navigate('SignIn');
   }
+
   return (
     <KeyboardAvoidingView
       style={style.container}
@@ -28,6 +44,8 @@ export default function SignUp({navigation}) {
         style={style.input}
         placeholder="Nome"
         placeholderTextColor="#999"
+        value={name}
+        onChangeText={setName}
       />
 
       <TextInput
@@ -35,6 +53,8 @@ export default function SignUp({navigation}) {
         placeholder="Telefone"
         placeholderTextColor="#999"
         keyboardType="numeric"
+        value={cellPhone}
+        onChangeText={setCellPhone}
       />
 
       <TextInput
@@ -43,6 +63,8 @@ export default function SignUp({navigation}) {
         style={style.input}
         placeholder="E-mail"
         placeholderTextColor="#999"
+        value={email}
+        onChangeText={setEmail}
       />
 
       <TextInput
@@ -50,14 +72,16 @@ export default function SignUp({navigation}) {
         placeholder="Senha"
         placeholderTextColor="#999"
         secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
       />
       <View style={style.footer}>
         <TouchableOpacity onPress={navigationSignIn} style={style.button}>
           <Text style={style.buttonText}>Voltar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={navigationSignUp} style={style.button}>
-          <Text style={style.buttonText}>Próximo</Text>
+        <TouchableOpacity onPress={handlerSubmit} style={style.button}>
+          <Text style={style.buttonText}>Cadastra</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

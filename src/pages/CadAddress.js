@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   StyleSheet,
@@ -6,13 +6,46 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  View,
 } from 'react-native';
 
 // import { Container } from './styles';
+import api from '../services/api';
 
 export default function CadAddress({navigation}) {
-  function navigationHome() {
-    navigation.navigate('Home');
+  const [street, setStreet] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [numberHouse, setNumberHouse] = useState('');
+
+  const name = navigation.getParam('name');
+  const cellPhone = navigation.getParam('cellPhone');
+  const email = navigation.getParam('email');
+  const password = navigation.getParam('password');
+
+  async function handlerSubmit() {
+    await api.post('/users', {
+      nome: name,
+      telefone: cellPhone,
+      password,
+      email,
+      endereco: [
+        {
+          rua: street,
+          bairro: neighborhood,
+          cidade: city,
+          estado: state,
+          numeroCasa: numberHouse,
+        },
+      ],
+    });
+  }
+
+  console.log(street);
+
+  function navigationSignUp() {
+    navigation.navigate('SignUp');
   }
   return (
     <KeyboardAvoidingView
@@ -24,12 +57,16 @@ export default function CadAddress({navigation}) {
         style={style.input}
         placeholder="Rua"
         placeholderTextColor="#999"
+        value={street}
+        onChangeText={setStreet}
       />
 
       <TextInput
         style={style.input}
         placeholder="Bairro"
         placeholderTextColor="#999"
+        value={neighborhood}
+        onChangeText={setNeighborhood}
       />
 
       <TextInput
@@ -37,23 +74,35 @@ export default function CadAddress({navigation}) {
         keyboardType="numeric"
         placeholder="Número da casa"
         placeholderTextColor="#999"
+        value={numberHouse}
+        onChangeText={setNumberHouse}
       />
 
       <TextInput
         style={style.input}
         placeholder="Cidade"
         placeholderTextColor="#999"
+        value={city}
+        onChangeText={setCity}
       />
 
       <TextInput
         style={style.input}
         placeholder="Estado"
         placeholderTextColor="#999"
+        value={state}
+        onChangeText={setState}
       />
 
-      <TouchableOpacity onPress={navigationHome} style={style.button}>
-        <Text style={style.buttonText}>Cadastrar</Text>
-      </TouchableOpacity>
+      <View style={style.footer}>
+        <TouchableOpacity onPress={navigationSignUp} style={style.button}>
+          <Text style={style.buttonText}>Voltar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handlerSubmit} style={style.button}>
+          <Text style={style.buttonText}>Próximo</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -69,7 +118,7 @@ const style = StyleSheet.create({
   title: {
     color: '#FFF',
     fontSize: 25,
-    marginBottom: 25,
+    marginBottom: 15,
   },
 
   input: {
@@ -97,5 +146,13 @@ const style = StyleSheet.create({
   buttonText: {
     color: '#FFF',
     fontSize: 18,
+  },
+
+  footer: {
+    display: 'flex',
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: -10,
   },
 });

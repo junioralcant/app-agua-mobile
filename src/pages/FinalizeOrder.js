@@ -60,6 +60,10 @@ export default function FinalizeOrder({navigation}) {
     });
   }
 
+  function navigationCadAddress() {
+    navigation.navigate('CadAddress', {from: 'FinalizerOrder'});
+  }
+
   function addAmount() {
     setAmount(amount + 1);
     setPrice((amount + 1) * product.preco);
@@ -112,7 +116,7 @@ export default function FinalizeOrder({navigation}) {
           <View>
             <TouchableOpacity style={style.boxSelectAddress}>
               <Text style={style.textSelectAddress}>Selecione um Endereço</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={navigationCadAddress}>
                 <Text style={style.addAddress}>+</Text>
               </TouchableOpacity>
             </TouchableOpacity>
