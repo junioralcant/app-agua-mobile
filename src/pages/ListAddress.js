@@ -9,6 +9,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 import api from '../services/api';
@@ -40,6 +41,26 @@ export default function FinalizeOrder({navigation}) {
     navigation.navigate('CadAddress', {from: 'ListAddress'});
   }
 
+  function destroyAddress(id) {
+    async function destroy() {
+      await api.delete(`/enderecos/${id}`);
+      const response = await api.get('/enderecos');
+      setAddress(response.data);
+    }
+    Alert.alert(
+      'Exclusão',
+      'Deseja excluir o endereço selecionado?',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => navigationListAddress(),
+          style: 'cancel',
+        },
+        {text: 'Excluir', onPress: () => destroy()},
+      ],
+      {cancelable: false},
+    );
+  }
   return (
     <>
       {/* header */}
@@ -84,16 +105,18 @@ export default function FinalizeOrder({navigation}) {
                     </Text>
                   </View>
                   <View style={style.ectionAddress}>
-                    <TouchableOpacity>
-                      <Text>
-                        <Icon name="edit" size={25} color="#7289da" />
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => destroyAddress(addres._id)}>
                       <Text>
                         <Icon name="trash" size={25} color="#7289da" />
                       </Text>
                     </TouchableOpacity>
+                    {/* <TouchableOpacity>
+                      <Text>
+                         <Icon name="edit" size={25} color="#7289da" />
+
+                      </Text>
+                    </TouchableOpacity> */}
                   </View>
                 </View>
               );

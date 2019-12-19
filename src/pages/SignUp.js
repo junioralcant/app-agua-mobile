@@ -18,20 +18,25 @@ export default function SignUp({navigation}) {
   const [cellPhone, setCellPhone] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState('');
 
   function navigationSignIn() {
     navigation.navigate('SignIn');
   }
 
   async function handlerSubmit() {
-    await api.post('/users', {
-      nome: name,
-      telefone: cellPhone,
-      email,
-      password,
-    });
-    Alert.alert('Cadastro', 'Cadastro efetuado com sucesso!');
-    navigation.navigate('SignIn');
+    if (!name || !cellPhone || !email || !password) {
+      setError('Preencha todos os campos');
+    } else {
+      await api.post('/users', {
+        nome: name,
+        telefone: cellPhone,
+        email,
+        password,
+      });
+      Alert.alert('Cadastro', 'Cadastro efetuado com sucesso!');
+      navigation.navigate('SignIn');
+    }
   }
 
   return (
@@ -40,6 +45,7 @@ export default function SignUp({navigation}) {
       behavior="padding"
       enabled={Platform.OS === 'ios'}>
       <Text style={style.title}>Informe seus dados</Text>
+      {error !== 0 && <Text style={style.error}>{error}</Text>}
       <TextInput
         style={style.input}
         placeholder="Nome"
@@ -123,7 +129,12 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  error: {
+    textAlign: 'center',
+    color: '#ce2029',
+    fontSize: 18,
+    marginHorizontal: 20,
+  },
   buttonText: {
     color: '#FFF',
     fontSize: 18,
