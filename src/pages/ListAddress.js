@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import api from '../services/api';
+import Header from '../components/Header';
 
 export default function FinalizeOrder({navigation}) {
   const [address, setAddress] = useState([]);
@@ -64,15 +65,7 @@ export default function FinalizeOrder({navigation}) {
   return (
     <>
       {/* header */}
-      <View style={style.header}>
-        <TouchableOpacity>
-          <Text style={style.textHeadder} />
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Text style={style.textHeadder}>Junior</Text>
-        </TouchableOpacity>
-      </View>
+      <Header />
       {/* containder */}
 
       <View style={style.container}>

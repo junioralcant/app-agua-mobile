@@ -6,6 +6,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import api from '../services/api';
 import agua from '../assets/agua.jpg';
+import Header from '../components/Header';
 
 export default function ConfirmedOrder({navigation}) {
   const [product, setProduct] = useState([]);
@@ -60,15 +61,7 @@ export default function ConfirmedOrder({navigation}) {
   return (
     <>
       {/* header */}
-      <View style={style.header}>
-        <TouchableOpacity>
-          <Text style={style.textHeadder} />
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Text style={style.textHeadder}>Junior Marques</Text>
-        </TouchableOpacity>
-      </View>
+      <Header />
       {/* containder */}
 
       <View style={style.container}>

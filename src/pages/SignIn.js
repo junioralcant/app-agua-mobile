@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StackActions, NavigationActions} from 'react-navigation';
+import {NavigationActions} from 'react-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {
@@ -23,10 +23,6 @@ export default function SignIn({navigation}) {
     navigation.navigate('SignUp');
   }
 
-  function navigationHome() {
-    navigation.navigate('Home');
-  }
-
   function handleEmailChange(email) {
     setEmail(email);
   }
@@ -46,7 +42,7 @@ export default function SignIn({navigation}) {
         });
 
         await AsyncStorage.setItem('@AppAgua:token', response.data.token);
-
+        await AsyncStorage.setItem('userId', response.data.user._id);
         const resetAction = NavigationActions.navigate({
           routeName: 'Home',
         });

@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import api from '../services/api';
+import Header from '../components/Header';
 
 export default function FinalizeOrder({navigation}) {
   const [orders, setOrders] = useState([]);
@@ -37,24 +38,10 @@ export default function FinalizeOrder({navigation}) {
     navigation.navigate('ListAddress');
   }
 
-  function navigationSignIn() {
-    navigation.navigate('SignIn');
-  }
-
-  console.log(orders);
-
   return (
     <>
       {/* header */}
-      <View style={style.header}>
-        <TouchableOpacity>
-          <Text style={style.textHeadder} />
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Text style={style.textHeadder}>Junior</Text>
-        </TouchableOpacity>
-      </View>
+      <Header />
       {/* containder */}
 
       <View style={style.container}>
@@ -74,7 +61,7 @@ export default function FinalizeOrder({navigation}) {
               const dateOrder = format(date, 'dd-MM-yyyy', {
                 locale: pt,
               });
-              console.log('teste' + order);
+
               return (
                 <View key={order._id} style={style.boxOrder}>
                   {order.enderecoEntrega.map(end => {

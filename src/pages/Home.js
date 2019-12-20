@@ -7,6 +7,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import agua from '../assets/agua.jpg';
 import api from '../services/api';
+import HeaderSignIn from '../components/HeaderSignIn';
 
 export default function Home({navigation}) {
   const [product, setProduct] = useState([]);
@@ -37,23 +38,9 @@ export default function Home({navigation}) {
     navigation.navigate('ListAddress');
   }
 
-  function logout() {
-    AsyncStorage.removeItem('@AppAgua:token');
-    navigation.navigate('SignIn');
-  }
-
   return (
     <>
-      {/* header */}
-      <View style={style.header}>
-        <TouchableOpacity onPress={logout}>
-          <Text style={style.textHeadder}>Sair</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Text style={style.textHeadder}>Junior Marques</Text>
-        </TouchableOpacity>
-      </View>
+      <HeaderSignIn navigation={navigation} />
       {/* containder */}
 
       <View style={style.container}>
