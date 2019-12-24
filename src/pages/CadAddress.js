@@ -78,7 +78,6 @@ export default function CadAddress({navigation}) {
 
       <TextInput
         style={style.input}
-        keyboardType="numeric"
         placeholder="Número da casa"
         placeholderTextColor="#999"
         value={numberHouse}
