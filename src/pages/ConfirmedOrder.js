@@ -2,7 +2,14 @@ import React, {useState, useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 
 import api from '../services/api';
 import agua from '../assets/agua.jpg';
@@ -19,15 +26,20 @@ export default function ConfirmedOrder({navigation}) {
 
   useEffect(() => {
     async function handlerOrder() {
-      await api.post('/pedidos', {
-        produto: productId,
-        enderecoId: addressId,
-        quantidade: amount,
-      });
+      try {
+        await api.post('/pedidos', {
+          produto: productId,
+          enderecoId: addressId,
+          quantidade: amount,
+        });
+      } catch (error) {
+        Alert.alert('Ops', error.response.data.mensagem);
+        navigation.navigate('Home');
+      }
     }
 
     handlerOrder();
-  }, [productId, addressId, amount]);
+  }, [productId, addressId, amount, navigation]);
 
   useEffect(() => {
     async function loadProduct() {

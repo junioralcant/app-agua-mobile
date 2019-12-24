@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 import api from '../services/api';
@@ -25,8 +26,12 @@ export default function FinalizeOrder({navigation}) {
 
   useEffect(() => {
     async function loadProduct() {
-      const response = await api.get(`/produtos/${id}`);
-      setProduct(response.data);
+      try {
+        const response = await api.get(`/produtos/${id}`);
+        setProduct(response.data);
+      } catch (error) {
+        Alert.alert('Ops', error.response.data.error);
+      }
     }
     loadProduct();
   }, [id]);
