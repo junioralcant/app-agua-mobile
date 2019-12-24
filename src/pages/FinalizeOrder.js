@@ -58,12 +58,19 @@ export default function FinalizeOrder({navigation}) {
   }
 
   function navigationComfirmedOrder(addressId) {
-    navigation.navigate('ConfirmedOrder', {
-      idAddress: addressId,
-      idProduct: id,
-      amount,
-      price,
-    });
+    if (amount <= 0) {
+      Alert.alert(
+        'Ops',
+        'A quantidade do produto deve ser maior que 0 (Zero).',
+      );
+    } else {
+      navigation.navigate('ConfirmedOrder', {
+        idAddress: addressId,
+        idProduct: id,
+        amount,
+        price,
+      });
+    }
   }
 
   function addAmount() {
