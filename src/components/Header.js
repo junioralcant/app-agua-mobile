@@ -7,22 +7,16 @@ import api from '../services/api';
 
 export default function Header({navigation}) {
   const [user, setUser] = useState({});
-  const [userId, setuserId] = useState();
-
-  async function getUserId() {
-    const id = await AsyncStorage.getItem('userId');
-    setuserId(id);
-  }
 
   useEffect(() => {
     async function loadUser() {
-      const response = await api.get(`/users/${userId}`);
+      const id = await AsyncStorage.getItem('userId');
+      const response = await api.get(`/users/${id}`);
       setUser(response.data);
     }
 
-    getUserId();
     loadUser();
-  }, [userId]);
+  }, []);
 
   return (
     <View style={style.header}>
