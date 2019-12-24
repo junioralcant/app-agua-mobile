@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {NavigationActions} from 'react-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -30,6 +30,15 @@ export default function SignIn({navigation}) {
   function handlePasswordChange(password) {
     setPassword(password);
   }
+
+  useEffect(() => {
+    AsyncStorage.getItem('userId').then(userId => {
+      if (userId) {
+        navigation.navigate('Home', {userId});
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleSignInPress() {
     if (email.length === 0 || password.length === 0) {
