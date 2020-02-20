@@ -32,6 +32,7 @@ export default function ConfirmedOrder({navigation}) {
           enderecoId: addressId,
           quantidade: amount,
         });
+        Alert.alert('Pedido realisado com sucesso!');
       } catch (error) {
         Alert.alert('Ops', error.response.data.mensagem);
         navigation.navigate('Home');
