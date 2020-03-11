@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {
   View,
@@ -26,11 +27,14 @@ export default function ConfirmedOrder({navigation}) {
 
   useEffect(() => {
     async function handlerOrder() {
+      const oneSignalUserId = await AsyncStorage.getItem('userOneSignalId');
+
       try {
         await api.post('/pedidos', {
           produto: productId,
           enderecoId: addressId,
           quantidade: amount,
+          userOneSignalId: oneSignalUserId,
         });
         Alert.alert('Pedido realisado com sucesso!');
       } catch (error) {
