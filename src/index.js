@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import OneSignal from 'react-native-onesignal';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 import Routes from './routes';
 
 class App extends Component {
@@ -24,7 +26,11 @@ class App extends Component {
 
   onOpened = notification => {};
 
-  onIds = id => {};
+  onIds = device => {
+    AsyncStorage.setItem('userOneSignalId', device.userId);
+  };
+
+  loadStatus = () => {};
 
   render() {
     return <Routes />;
