@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 
 import api from '../services/api';
@@ -22,11 +23,14 @@ const AnimatedTouchableOpacity = Animatable.createAnimatableComponent(
 
 export default function FinalizeOrder({navigation}) {
   const [address, setAddress] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadAddress() {
+      setLoading(true);
       const response = await api.get('/enderecos');
       setAddress(response.data);
+      setLoading(false);
     }
 
     loadAddress();
@@ -85,44 +89,52 @@ export default function FinalizeOrder({navigation}) {
           </AnimatedTouchableOpacity>
         </View>
 
-        <ScrollView style={style.boxOrder}>
-          <View>
-            <Text> </Text>
+        {loading ? (
+          <ActivityIndicator
+            style={style.loading}
+            size="large"
+            color="#7289da"
+          />
+        ) : (
+          <ScrollView style={style.boxOrder}>
+            <View>
+              <Text> </Text>
 
-            {address.map(addres => {
-              return (
-                <View key={addres._id} style={style.boxAddress}>
-                  <View style={style.address}>
-                    <Text style={style.textAddress}>Rua: {addres.rua}</Text>
-                    <Text style={style.textAddress}>
-                      Bairro: {addres.bairro}
-                    </Text>
-                    <Text style={style.textAddress}>
-                      Cidade: {addres.cidade}
-                    </Text>
-                    <Text style={style.textAddress}>
-                      Nº Casa: {addres.numeroCasa}
-                    </Text>
-                  </View>
-                  <View style={style.ectionAddress}>
-                    <TouchableOpacity
-                      onPress={() => destroyAddress(addres._id)}>
-                      <Text>
-                        <Icon name="trash" size={25} color="#7289da" />
+              {address.map(addres => {
+                return (
+                  <View key={addres._id} style={style.boxAddress}>
+                    <View style={style.address}>
+                      <Text style={style.textAddress}>Rua: {addres.rua}</Text>
+                      <Text style={style.textAddress}>
+                        Bairro: {addres.bairro}
                       </Text>
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity>
-                      <Text>
-                         <Icon name="edit" size={25} color="#7289da" />
+                      <Text style={style.textAddress}>
+                        Cidade: {addres.cidade}
+                      </Text>
+                      <Text style={style.textAddress}>
+                        Nº Casa: {addres.numeroCasa}
+                      </Text>
+                    </View>
+                    <View style={style.ectionAddress}>
+                      <TouchableOpacity
+                        onPress={() => destroyAddress(addres._id)}>
+                        <Text>
+                          <Icon name="trash" size={25} color="#7289da" />
+                        </Text>
+                      </TouchableOpacity>
+                      {/* <TouchableOpacity>
+                    <Text>
+                       <Icon name="edit" size={25} color="#7289da" />
 
-                      </Text>
-                    </TouchableOpacity> */}
+                    </Text>
+                  </TouchableOpacity> */}
+                    </View>
                   </View>
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
+                );
+              })}
+            </View>
+          </ScrollView>
+        )}
 
         {/* footer */}
         <View style={style.footer}>
