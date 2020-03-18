@@ -10,6 +10,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 
 import api from '../services/api';
@@ -17,11 +18,14 @@ import Header from '../components/Header';
 
 export default function FinalizeOrder({navigation}) {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadOrder() {
+      setLoading(true);
       const response = await api.get('/pedidos');
       setOrders(response.data);
+      setLoading(false);
     }
 
     loadOrder();
@@ -51,51 +55,61 @@ export default function FinalizeOrder({navigation}) {
           <Text style={style.textListOrder}>Pedidos</Text>
         </View>
 
-        <ScrollView style={style.boxOrderScroll}>
-          <View>
-            <Text> </Text>
+        {loading ? (
+          <ActivityIndicator
+            style={style.loading}
+            size="large"
+            color="#7289da"
+          />
+        ) : (
+          <ScrollView style={style.boxOrderScroll}>
+            <View>
+              <Text> </Text>
 
-            {orders.map(order => {
-              const date = parseISO(order.createdAt);
+              {orders.map(order => {
+                const date = parseISO(order.createdAt);
 
-              const dateOrder = format(date, 'dd-MM-yyyy', {
-                locale: pt,
-              });
+                const dateOrder = format(date, 'dd-MM-yyyy', {
+                  locale: pt,
+                });
 
-              return (
-                <View key={order._id} style={style.boxOrder}>
-                  {order.enderecoEntrega.map(end => {
-                    return (
-                      <View key={end._id}>
-                        <Text style={style.textAddress}>Rua: {end.rua}</Text>
-                        <Text style={style.textAddress}>
-                          Bairro: {end.bairro}
-                        </Text>
-                        <Text style={style.textAddress}>
-                          Cidade: {end.cidade}
-                        </Text>
-                        <Text style={style.textAddress}>
-                          Nº Casa: {end.numeroCasa}
-                        </Text>
-                      </View>
-                    );
-                  })}
+                return (
+                  <View key={order._id} style={style.boxOrder}>
+                    {order.enderecoEntrega.map(end => {
+                      return (
+                        <View key={end._id}>
+                          <Text style={style.textAddress}>Rua: {end.rua}</Text>
+                          <Text style={style.textAddress}>
+                            Bairro: {end.bairro}
+                          </Text>
+                          <Text style={style.textAddress}>
+                            Cidade: {end.cidade}
+                          </Text>
+                          <Text style={style.textAddress}>
+                            Nº Casa: {end.numeroCasa}
+                          </Text>
+                        </View>
+                      );
+                    })}
 
-                  <View style={style.infoOrder}>
-                    <Text style={style.textInfoOrder}>
-                      {order.produto.nome}
-                    </Text>
-                    <Text style={style.textInfoOrder}>{order.quantidade}</Text>
-                    <Text style={style.textInfoOrder}>
-                      {order.valorTotal} R$
-                    </Text>
-                    <Text style={style.textInfoOrder}>{dateOrder}</Text>
+                    <View style={style.infoOrder}>
+                      <Text style={style.textInfoOrder}>
+                        {order.produto.nome}
+                      </Text>
+                      <Text style={style.textInfoOrder}>
+                        {order.quantidade}
+                      </Text>
+                      <Text style={style.textInfoOrder}>
+                        {order.valorTotal} R$
+                      </Text>
+                      <Text style={style.textInfoOrder}>{dateOrder}</Text>
+                    </View>
                   </View>
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
+                );
+              })}
+            </View>
+          </ScrollView>
+        )}
 
         {/* footer */}
         <View style={style.footer}>
