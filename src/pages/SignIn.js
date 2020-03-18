@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 
 import api from '../services/api';
@@ -23,6 +24,7 @@ export default function SignIn({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   function navigationSignUp() {
     navigation.navigate('SignUp');
@@ -50,6 +52,7 @@ export default function SignIn({navigation}) {
       setError('Preencha usuário e senha para continuar!');
     } else {
       try {
+        setLoading(true);
         const response = await api.post('/sessions', {
           email,
           password,
@@ -60,6 +63,8 @@ export default function SignIn({navigation}) {
         const resetAction = NavigationActions.navigate({
           routeName: 'Home',
         });
+
+        setLoading(false);
 
         navigation.dispatch(resetAction);
       } catch (_err) {
@@ -100,13 +105,17 @@ export default function SignIn({navigation}) {
         value={password}
       />
 
-      <AnimatedTouchableOpacity
-        animation="flipInY"
-        useNativeDriver
-        onPress={() => handleSignInPress()}
-        style={style.button}>
-        <Text style={style.buttonText}>Entrar</Text>
-      </AnimatedTouchableOpacity>
+      {loading ? (
+        <ActivityIndicator style={style.loading} size="large" color="#7289da" />
+      ) : (
+        <AnimatedTouchableOpacity
+          animation="flipInY"
+          useNativeDriver
+          onPress={() => handleSignInPress()}
+          style={style.button}>
+          <Text style={style.buttonText}>Entrar</Text>
+        </AnimatedTouchableOpacity>
+      )}
 
       <Animatable.View animation="slideInUp" useNativeDriver style={style.hr} />
 
@@ -186,5 +195,9 @@ const style = StyleSheet.create({
 
   buttonCadastro: {
     marginTop: 25,
+  },
+
+  loading: {
+    marginTop: 20,
   },
 });
