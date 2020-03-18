@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Animatable from 'react-native-animatable';
 
 import {
   View,
@@ -14,6 +15,10 @@ import {
 
 import api from '../services/api';
 import Header from '../components/Header';
+
+const AnimatedTouchableOpacity = Animatable.createAnimatableComponent(
+  TouchableOpacity,
+);
 
 export default function FinalizeOrder({navigation}) {
   const [address, setAddress] = useState([]);
@@ -73,9 +78,11 @@ export default function FinalizeOrder({navigation}) {
 
         <View style={style.boxTextAddress}>
           <Text style={style.textListAddress}>Endereços</Text>
-          <TouchableOpacity onPress={navigationCadAddress}>
+          <AnimatedTouchableOpacity
+            animation="flipInY"
+            onPress={navigationCadAddress}>
             <Text style={style.addAddress}> + </Text>
-          </TouchableOpacity>
+          </AnimatedTouchableOpacity>
         </View>
 
         <ScrollView style={style.boxOrder}>

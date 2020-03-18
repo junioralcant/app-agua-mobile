@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {NavigationActions} from 'react-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as Animatable from 'react-native-animatable';
 
 import {
-  View,
   Text,
   StyleSheet,
   TextInput,
@@ -13,6 +13,11 @@ import {
 } from 'react-native';
 
 import api from '../services/api';
+
+const AnimatedTouchableOpacity = Animatable.createAnimatableComponent(
+  TouchableOpacity,
+);
+const AnimatedTextInput = Animatable.createAnimatableComponent(TextInput);
 
 export default function SignIn({navigation}) {
   const [email, setEmail] = useState('');
@@ -68,9 +73,13 @@ export default function SignIn({navigation}) {
       style={style.container}
       behavior="padding"
       enabled={Platform.OS === 'ios'}>
-      <Text style={style.logo}>LOGOTIPO</Text>
+      <Animatable.Text animation="flipInX" useNativeDriver style={style.logo}>
+        LOGOTIPO
+      </Animatable.Text>
       {error !== 0 && <Text style={style.error}>{error}</Text>}
-      <TextInput
+      <AnimatedTextInput
+        animation="slideInLeft"
+        useNativeDriver
         autoCapitalize="none"
         autoCorrect={false}
         style={style.input}
@@ -80,7 +89,9 @@ export default function SignIn({navigation}) {
         placeholderTextColor="#999"
       />
 
-      <TextInput
+      <AnimatedTextInput
+        animation="slideInRight"
+        useNativeDriver
         style={style.input}
         placeholder="Informe sua senha"
         placeholderTextColor="#999"
@@ -89,17 +100,23 @@ export default function SignIn({navigation}) {
         value={password}
       />
 
-      <TouchableOpacity
+      <AnimatedTouchableOpacity
+        animation="flipInY"
+        useNativeDriver
         onPress={() => handleSignInPress()}
         style={style.button}>
         <Text style={style.buttonText}>Entrar</Text>
-      </TouchableOpacity>
+      </AnimatedTouchableOpacity>
 
-      <View style={style.hr} />
+      <Animatable.View animation="slideInUp" useNativeDriver style={style.hr} />
 
-      <TouchableOpacity onPress={navigationSignUp} style={style.buttonCadastro}>
+      <AnimatedTouchableOpacity
+        animation="slideInUp"
+        useNativeDriver
+        onPress={navigationSignUp}
+        style={style.buttonCadastro}>
         <Text style={style.buttonText}>Cadastre-se</Text>
-      </TouchableOpacity>
+      </AnimatedTouchableOpacity>
     </KeyboardAvoidingView>
   );
 }

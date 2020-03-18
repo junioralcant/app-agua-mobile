@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import * as Animatable from 'react-native-animatable';
 
 import {
-  View,
   Text,
   StyleSheet,
   TextInput,
@@ -44,44 +44,50 @@ export default function SignUp({navigation}) {
       style={style.container}
       behavior="padding"
       enabled={Platform.OS === 'ios'}>
-      <Text style={style.title}>Informe seus dados</Text>
+      <Animatable.Text style={style.title}>Informe seus dados</Animatable.Text>
       {error !== 0 && <Text style={style.error}>{error}</Text>}
-      <TextInput
-        style={style.input}
-        placeholder="Nome"
-        placeholderTextColor="#999"
-        value={name}
-        onChangeText={setName}
-      />
+      <Animatable.View
+        style={style.boxInput}
+        animation="fadeIn"
+        useNativeDriver>
+        <TextInput
+          style={style.input}
+          placeholder="Nome"
+          placeholderTextColor="#999"
+          value={name}
+          onChangeText={setName}
+        />
 
-      <TextInput
-        style={style.input}
-        placeholder="Telefone"
-        placeholderTextColor="#999"
-        keyboardType="numeric"
-        value={cellPhone}
-        onChangeText={setCellPhone}
-      />
+        <TextInput
+          style={style.input}
+          placeholder="Telefone"
+          placeholderTextColor="#999"
+          keyboardType="numeric"
+          value={cellPhone}
+          onChangeText={setCellPhone}
+        />
 
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        style={style.input}
-        placeholder="E-mail"
-        placeholderTextColor="#999"
-        value={email}
-        onChangeText={setEmail}
-      />
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={style.input}
+          placeholder="E-mail"
+          placeholderTextColor="#999"
+          value={email}
+          onChangeText={setEmail}
+        />
 
-      <TextInput
-        style={style.input}
-        placeholder="Senha"
-        placeholderTextColor="#999"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={setPassword}
-      />
-      <View style={style.footer}>
+        <TextInput
+          style={style.input}
+          placeholder="Senha"
+          placeholderTextColor="#999"
+          secureTextEntry={true}
+          value={password}
+          onChangeText={setPassword}
+        />
+      </Animatable.View>
+
+      <Animatable.View style={style.footer} animation="fadeIn">
         <TouchableOpacity onPress={navigationSignIn} style={style.button}>
           <Text style={style.buttonText}>Voltar</Text>
         </TouchableOpacity>
@@ -89,7 +95,7 @@ export default function SignUp({navigation}) {
         <TouchableOpacity onPress={handlerSubmit} style={style.button}>
           <Text style={style.buttonText}>Cadastra</Text>
         </TouchableOpacity>
-      </View>
+      </Animatable.View>
     </KeyboardAvoidingView>
   );
 }
@@ -108,6 +114,9 @@ const style = StyleSheet.create({
     marginBottom: 25,
   },
 
+  boxInput: {
+    width: '100%',
+  },
   input: {
     height: 55,
     alignSelf: 'stretch',

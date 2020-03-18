@@ -2,12 +2,17 @@ import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as Animatable from 'react-native-animatable';
 
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import agua from '../assets/agua.jpg';
 import api from '../services/api';
 import HeaderSignIn from '../components/HeaderSignIn';
+
+const AnimatedTouchableOpacity = Animatable.createAnimatableComponent(
+  TouchableOpacity,
+);
 
 export default function Home({navigation}) {
   const [product, setProduct] = useState([]);
@@ -47,7 +52,9 @@ export default function Home({navigation}) {
         {/* product */}
         {product.map(product => {
           return (
-            <TouchableOpacity
+            <AnimatedTouchableOpacity
+              animation="fadeInLeft"
+              useNativeDriver
               key={product._id}
               onPress={() => navigationFinalizeOrder(product._id)}
               style={style.product}>
@@ -59,7 +66,7 @@ export default function Home({navigation}) {
                 <Text style={style.textProduct}>{product.nome}</Text>
                 <Text style={style.text}>{product.preco},00 R$</Text>
               </View>
-            </TouchableOpacity>
+            </AnimatedTouchableOpacity>
           );
         })}
 

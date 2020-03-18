@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Animatable from 'react-native-animatable';
 
 import {
   View,
@@ -91,7 +92,10 @@ export default function FinalizeOrder({navigation}) {
 
       <View style={style.container}>
         {/* product */}
-        <View style={style.product}>
+        <Animatable.View
+          style={style.product}
+          animation="fadeInRight"
+          useNativeDriver>
           <View style={style.image}>
             <Image style={style.avatar} source={agua} />
           </View>
@@ -111,7 +115,7 @@ export default function FinalizeOrder({navigation}) {
               <Text style={style.text}>{price} R$</Text>
             </View>
           </View>
-        </View>
+        </Animatable.View>
 
         <ScrollView style={style.boxAddress}>
           <View>

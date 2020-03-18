@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as Animatable from 'react-native-animatable';
 
 import {
   View,
@@ -83,7 +84,10 @@ export default function ConfirmedOrder({navigation}) {
 
       <View style={style.container}>
         {/* product */}
-        <View style={style.product}>
+        <Animatable.View
+          style={style.product}
+          animation="fadeInLeft"
+          useNativeDriver>
           <View style={style.image}>
             <Image style={style.avatar} source={agua} />
           </View>
@@ -97,14 +101,17 @@ export default function ConfirmedOrder({navigation}) {
               <Text style={style.text}>{price} R$</Text>
             </View>
           </View>
-        </View>
+        </Animatable.View>
 
         <View style={style.boxAddress}>
-          <View style={style.boxSuccess}>
+          <Animatable.View
+            style={style.boxSuccess}
+            animation="bounceIn"
+            useNativeDriver>
             <Text style={style.textSuccessTitle}>
               Pedido efetuado com sucesso!
             </Text>
-          </View>
+          </Animatable.View>
 
           <View style={style.boxSelectAddress}>
             <Text style={style.textSelectAddress}>Endereço selecionado</Text>
@@ -113,12 +120,15 @@ export default function ConfirmedOrder({navigation}) {
 
           <Text> </Text>
 
-          <View style={style.address}>
+          <Animatable.View
+            style={style.address}
+            animation="fadeInRight"
+            useNativeDriver>
             <Text style={style.textAddress}>Rua: {address.rua}</Text>
             <Text style={style.textAddress}>Bairro: {address.bairro}</Text>
             <Text style={style.textAddress}>Cidade: {address.cidade}</Text>
             <Text style={style.textAddress}>Nº Casa: {address.numeroCasa}</Text>
-          </View>
+          </Animatable.View>
         </View>
 
         {/* footer */}

@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import * as Animatable from 'react-native-animatable';
+
 import {
   Text,
   StyleSheet,
@@ -7,7 +9,6 @@ import {
   Platform,
   TouchableOpacity,
   View,
-  Alert,
 } from 'react-native';
 
 // import { Container } from './styles';
@@ -58,57 +59,62 @@ export default function CadAddress({navigation}) {
       style={style.container}
       behavior="padding"
       enabled={Platform.OS === 'ios'}>
-      <Text style={style.title}>Cadastro de endereço</Text>
-      {error !== 0 && <Text style={style.error}>{error}</Text>}
-      <TextInput
-        style={style.input}
-        placeholder="Rua"
-        placeholderTextColor="#999"
-        value={street}
-        onChangeText={setStreet}
-      />
+      <Animatable.View
+        style={{width: '100%', alignItems: 'center'}}
+        animation="fadeIn"
+        useNativeDriver>
+        <Text style={style.title}>Cadastro de endereço</Text>
+        {error !== 0 && <Text style={style.error}>{error}</Text>}
+        <TextInput
+          style={style.input}
+          placeholder="Rua"
+          placeholderTextColor="#999"
+          value={street}
+          onChangeText={setStreet}
+        />
 
-      <TextInput
-        style={style.input}
-        placeholder="Bairro"
-        placeholderTextColor="#999"
-        value={neighborhood}
-        onChangeText={setNeighborhood}
-      />
+        <TextInput
+          style={style.input}
+          placeholder="Bairro"
+          placeholderTextColor="#999"
+          value={neighborhood}
+          onChangeText={setNeighborhood}
+        />
 
-      <TextInput
-        style={style.input}
-        placeholder="Número da casa"
-        placeholderTextColor="#999"
-        value={numberHouse}
-        onChangeText={setNumberHouse}
-      />
+        <TextInput
+          style={style.input}
+          placeholder="Número da casa"
+          placeholderTextColor="#999"
+          value={numberHouse}
+          onChangeText={setNumberHouse}
+        />
 
-      <TextInput
-        style={style.input}
-        placeholder="Cidade"
-        placeholderTextColor="#999"
-        value={city}
-        onChangeText={setCity}
-      />
+        <TextInput
+          style={style.input}
+          placeholder="Cidade"
+          placeholderTextColor="#999"
+          value={city}
+          onChangeText={setCity}
+        />
 
-      <TextInput
-        style={style.input}
-        placeholder="Estado"
-        placeholderTextColor="#999"
-        value={state}
-        onChangeText={setState}
-      />
+        <TextInput
+          style={style.input}
+          placeholder="Estado"
+          placeholderTextColor="#999"
+          value={state}
+          onChangeText={setState}
+        />
 
-      <View style={style.footer}>
-        <TouchableOpacity onPress={navigationFrom} style={style.button}>
-          <Text style={style.buttonText}>Voltar</Text>
-        </TouchableOpacity>
+        <View style={style.footer}>
+          <TouchableOpacity onPress={navigationFrom} style={style.button}>
+            <Text style={style.buttonText}>Voltar</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity onPress={handlerSubmit} style={style.button}>
-          <Text style={style.buttonText}>Salvar</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={handlerSubmit} style={style.button}>
+            <Text style={style.buttonText}>Salvar</Text>
+          </TouchableOpacity>
+        </View>
+      </Animatable.View>
     </KeyboardAvoidingView>
   );
 }
